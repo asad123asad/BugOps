@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bugops-green: #2E7D32;
+  --bugops-brown: #6D4C41;
+  --bugops-black: #111111;
+  --bugops-white: #FFFFFF;
+}
+
+body {
+  color: var(--bugops-black);
+  background: var(--bugops-white);
+}
