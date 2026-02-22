@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import type { Task } from "@/lib/supabase";
 import ProgressCircle from "@/components/ProgressCircle";
 import TaskItem from "@/components/TaskItem";
 import AddTaskForm from "@/components/AddTaskForm";
@@ -24,7 +25,7 @@ export default async function DayPage({ params }: PageProps) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
-  let tasks: { id: string; title: string; description: string | null; status: string; date: string; created_at: string }[] | null = null;
+  let tasks: Task[] | null = null;
   try {
     const { data } = await supabase
       .from("tasks")
@@ -32,7 +33,7 @@ export default async function DayPage({ params }: PageProps) {
       .eq("user_id", user.id)
       .eq("date", dateStr)
       .order("created_at", { ascending: true });
-    tasks = data;
+    tasks = (data as Task[]) ?? [];
   } catch {
     tasks = [];
   }
