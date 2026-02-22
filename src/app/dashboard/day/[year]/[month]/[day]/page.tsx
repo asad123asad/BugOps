@@ -24,12 +24,18 @@ export default async function DayPage({ params }: PageProps) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
-  const { data: tasks } = await supabase
-    .from("tasks")
-    .select("*")
-    .eq("user_id", user.id)
-    .eq("date", dateStr)
-    .order("created_at", { ascending: true });
+  let tasks: { id: string; title: string; description: string | null; status: string; date: string; created_at: string }[] | null = null;
+  try {
+    const { data } = await supabase
+      .from("tasks")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("date", dateStr)
+      .order("created_at", { ascending: true });
+    tasks = data;
+  } catch {
+    tasks = [];
+  }
 
   const total = tasks?.length ?? 0;
   const completed = tasks?.filter((t) => t.status === "done").length ?? 0;

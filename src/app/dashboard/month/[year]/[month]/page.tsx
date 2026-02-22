@@ -17,12 +17,18 @@ export default async function MonthPage({ params }: PageProps) {
   const startDate = new Date(yearNum, monthNum - 1, 1).toISOString().split("T")[0];
   const endDate = new Date(yearNum, monthNum, 0).toISOString().split("T")[0];
 
-  const { data: tasks } = await supabase
-    .from("tasks")
-    .select("date, status")
-    .eq("user_id", user.id)
-    .gte("date", startDate)
-    .lte("date", endDate);
+  let tasks: { date: string; status: string }[] | null = null;
+  try {
+    const { data } = await supabase
+      .from("tasks")
+      .select("date, status")
+      .eq("user_id", user.id)
+      .gte("date", startDate)
+      .lte("date", endDate);
+    tasks = data;
+  } catch {
+    tasks = [];
+  }
 
   const dayStats = new Map<
     number,
