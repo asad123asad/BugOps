@@ -42,7 +42,7 @@ export default function MonthCalendar({
 
   return (
     <div>
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center gap-4 mb-2">
         <Link
           href="/dashboard"
           className="text-bugops-brown hover:text-bugops-green transition"
@@ -53,6 +53,9 @@ export default function MonthCalendar({
           {MONTHS[month - 1]} {year}
         </h1>
       </div>
+      <p className="text-bugops-brown/80 text-sm mb-4">
+        Click a date to add or manage tasks. Green circle = all done, Brown = in progress, Empty = no tasks.
+      </p>
 
       <div className="grid grid-cols-7 gap-0.5 max-w-2xl">
         {WEEKDAYS.map((day) => (
