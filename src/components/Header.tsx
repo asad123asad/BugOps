@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Header() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function Header() {
         <Link href="/dashboard" className="text-xl font-bold text-bugops-green">
           Bugops
         </Link>
+        <ThemeToggle />
         <button
           onClick={handleLogout}
           className="text-sm text-bugops-brown hover:text-bugops-black transition"

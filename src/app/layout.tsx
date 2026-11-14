@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased min-h-screen bg-bugops-white text-bugops-black">
+      <body className="antialiased min-h-screen bg-[var(--bugops-bg)] text-[var(--bugops-text)]">
         {children}
       </body>
     </html>
