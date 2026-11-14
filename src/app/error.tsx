@@ -10,9 +10,9 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bugops-white px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bugops-bg)] px-4">
       <div className="text-center max-w-md">
-        <h1 className="text-xl font-semibold text-bugops-black mb-2">
+        <h1 className="text-xl font-semibold text-bugops-black dark:text-[var(--bugops-text)] mb-2">
           Something went wrong
         </h1>
         <p className="text-bugops-brown/80 mb-6 text-sm">

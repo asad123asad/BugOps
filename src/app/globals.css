@@ -3,13 +3,22 @@
 @tailwind utilities;
 
 :root {
+  --bugops-bg: #FFFFFF;
+  --bugops-text: #111111;
   --bugops-green: #2E7D32;
   --bugops-brown: #6D4C41;
-  --bugops-black: #111111;
-  --bugops-white: #FFFFFF;
+  --bugops-brown-light: #8D6E63;
+  --bugops-green-light: #4CAF50;
+}
+
+.dark {
+  --bugops-bg: #111111;
+  --bugops-text: #FFFFFF;
+  --bugops-green: #4CAF50;
+  --bugops-brown: #8D6E63;
 }
 
 body {
-  color: var(--bugops-black);
-  background: var(--bugops-white);
+  color: var(--bugops-text);
+  background: var(--bugops-bg);
 }
