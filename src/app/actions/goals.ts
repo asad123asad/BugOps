@@ -117,3 +117,24 @@ export async function updateGoalStatus(goalId: string, status: GoalStatus) {
   revalidatePath("/dashboard/config/goals");
   revalidatePath(`/dashboard/config/goals/${goalId}`);
 }
+
+export async function reorderGoalSteps(goalId: string, orderedIds: string[]) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  const updates = orderedIds.map((id, index) =>
+    supabase
+      .from("goal_steps")
+      .update({ sort_order: index })
+      .eq("id", id)
+      .eq("user_id", user.id)
+  );
+
+  const results = await Promise.all(updates);
+  const error = results.find((r) => r.error);
+  if (error) throw error;
+
+  revalidatePath("/dashboard/config/goals");
+  revalidatePath(`/dashboard/config/goals/${goalId}`);
+}

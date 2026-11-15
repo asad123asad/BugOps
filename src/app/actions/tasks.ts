@@ -64,3 +64,25 @@ export async function deleteTask(taskId: string, dateStr: string) {
   revalidatePath(`/dashboard/day/${y}/${m}/${d}`);
   revalidatePath(`/dashboard/month/${y}/${m}`);
 }
+
+export async function reorderTasks(orderedIds: string[], dateStr: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  const updates = orderedIds.map((id, index) =>
+    supabase
+      .from("tasks")
+      .update({ sort_order: index })
+      .eq("id", id)
+      .eq("user_id", user.id)
+  );
+
+  const results = await Promise.all(updates);
+  const error = results.find((r) => r.error);
+  if (error) throw error;
+
+  const [y, m, d] = dateStr.split("-");
+  revalidatePath(`/dashboard/day/${y}/${m}/${d}`);
+  revalidatePath(`/dashboard/month/${y}/${m}`);
+}

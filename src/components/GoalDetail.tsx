@@ -5,7 +5,7 @@ import Link from "next/link";
 import { updateGoalStatus } from "@/app/actions/goals";
 import { useRouter } from "next/navigation";
 import GoalStepForm from "@/components/GoalStepForm";
-import GoalStepItem from "@/components/GoalStepItem";
+import GoalStepsList from "@/components/GoalStepsList";
 import type { Goal } from "@/lib/supabase";
 
 interface GoalStep {
@@ -92,20 +92,11 @@ export default function GoalDetail({ goal, steps }: GoalDetailProps) {
 
       <GoalStepForm goalId={goal.id} onStepAdded={handleStepAdded} />
 
-      <div className="space-y-2">
-        {steps.length === 0 && (
-          <p className="text-bugops-brown/70 text-center py-8">
-            No steps yet. Add your first step above.
-          </p>
-        )}
-        {steps.map((step) => (
-          <GoalStepItem
-            key={step.id}
-            step={step}
-            onStepChanged={() => router.refresh()}
-          />
-        ))}
-      </div>
+      <GoalStepsList
+        steps={steps}
+        goalId={goal.id}
+        onStepChanged={() => router.refresh()}
+      />
     </div>
   );
 }
