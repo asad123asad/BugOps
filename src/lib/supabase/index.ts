@@ -7,6 +7,7 @@ export interface Task {
   description: string | null;
   status: TaskStatus;
   date: string;
+  sort_order: number;
   created_at: string;
 }
 

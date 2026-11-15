@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS tasks (
   description TEXT,
   status TEXT NOT NULL DEFAULT 'start' CHECK (status IN ('start', 'in_progress', 'done')),
   date DATE NOT NULL,
+  sort_order INT DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -25,7 +26,11 @@ EXCEPTION WHEN duplicate_object THEN null; END $$;
 DO $$ BEGIN
   CREATE POLICY "Users can delete own tasks" ON tasks FOR DELETE USING (auth.uid() = user_id);
 EXCEPTION WHEN duplicate_object THEN null; END $$;
+-- Add sort_order column if tasks table already exists without it
+ALTER TABLE tasks ADD COLUMN IF NOT EXISTS sort_order INT DEFAULT 0;
+
 CREATE INDEX IF NOT EXISTS tasks_user_date_idx ON tasks(user_id, date);
+CREATE INDEX IF NOT EXISTS tasks_user_date_sort_idx ON tasks(user_id, date, sort_order);
 
 -- Quotes table
 CREATE TABLE IF NOT EXISTS quotes (
