@@ -21,12 +21,14 @@ interface MonthCalendarProps {
   year: number;
   month: number;
   dayProgress: DayProgress[];
+  today?: number;
 }
 
 export default function MonthCalendar({
   year,
   month,
   dayProgress,
+  today,
 }: MonthCalendarProps) {
   const firstDay = new Date(year, month - 1, 1);
   const lastDay = new Date(year, month, 0);
@@ -57,7 +59,7 @@ export default function MonthCalendar({
         Click a date to add or manage tasks. Green circle = all done, Brown = in progress, Empty = no tasks.
       </p>
 
-      <div className="grid grid-cols-7 gap-0.5 max-w-2xl">
+      <div className="grid grid-cols-7 gap-0.5 w-full">
         {WEEKDAYS.map((day) => (
           <div
             key={day}
@@ -74,11 +76,18 @@ export default function MonthCalendar({
           const progress = data?.progress ?? 0;
           const totalTasks = data?.totalTasks ?? 0;
           const completedTasks = data?.completedTasks ?? 0;
+          const isToday = today === date;
           return (
             <Link
               key={date}
               href={`/dashboard/day/${year}/${month}/${date}`}
-              className="min-h-[56px] flex flex-col items-center justify-center rounded border border-bugops-brown/20 hover:border-bugops-green/50 hover:bg-bugops-green/5 transition p-1"
+              className={`min-h-[64px] sm:min-h-[84px] flex flex-col items-center justify-center rounded border transition p-1 ${
+                totalTasks > 0 && progress >= 100
+                  ? "bg-emerald-50/50 dark:bg-emerald-950/20 border-[var(--bugops-green)]"
+                  : isToday
+                  ? "border-2 border-bugops-green bg-bugops-green/5 shadow-sm"
+                  : "border-bugops-brown/20 hover:border-bugops-green/50 hover:bg-bugops-green/5"
+              }`}
             >
               <span className="text-xs font-medium text-bugops-black mb-0.5">
                 {date}

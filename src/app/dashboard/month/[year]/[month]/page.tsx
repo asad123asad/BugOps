@@ -57,7 +57,11 @@ export default async function MonthPage({ params }: PageProps) {
     })
   );
 
+  const now = new Date();
+  const isCurrentMonth = now.getFullYear() === yearNum && now.getMonth() + 1 === monthNum;
+  const today = isCurrentMonth ? now.getDate() : undefined;
+
   return (
-    <MonthCalendar year={yearNum} month={monthNum} dayProgress={dayProgress} />
+    <MonthCalendar year={yearNum} month={monthNum} dayProgress={dayProgress} today={today} />
   );
 }

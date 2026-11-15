@@ -32,26 +32,26 @@ export default function AddTaskForm({ date }: AddTaskFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="mb-6">
-      <div className="rounded-xl border border-bugops-brown/20 bg-white p-4 space-y-3">
+      <div className="rounded-xl border border-bugops-brown/20 bg-[var(--bugops-bg)] p-4 space-y-3">
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Task title (required)"
           required
-          className="w-full px-4 py-2 rounded-lg border border-bugops-brown/30 bg-white text-bugops-black focus:ring-2 focus:ring-bugops-green/50 focus:border-bugops-green outline-none"
+          className="w-full px-4 py-2.5 text-base rounded-lg border border-bugops-brown/30 bg-[var(--bugops-bg)] text-[var(--bugops-text)] focus:ring-2 focus:ring-bugops-green/50 focus:border-bugops-green outline-none"
         />
         <input
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Description (optional)"
-          className="w-full px-4 py-2 rounded-lg border border-bugops-brown/30 bg-white text-bugops-black focus:ring-2 focus:ring-bugops-green/50 focus:border-bugops-green outline-none"
+          className="w-full px-4 py-2.5 text-base rounded-lg border border-bugops-brown/30 bg-[var(--bugops-bg)] text-[var(--bugops-text)] focus:ring-2 focus:ring-bugops-green/50 focus:border-bugops-green outline-none"
         />
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 rounded-lg bg-bugops-green text-white font-medium hover:bg-bugops-green/90 disabled:opacity-60 transition"
+          className="w-full min-h-[44px] px-4 py-2.5 text-base rounded-lg bg-bugops-green text-white font-medium hover:bg-bugops-green/90 disabled:opacity-60 transition"
         >
           {loading ? "Adding..." : "Add Task"}
         </button>
